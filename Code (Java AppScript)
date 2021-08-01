@@ -1,0 +1,200 @@
+function sendconfirmationemail() {
+  var sheetid = '1qhJ9ikBZtV0aDfL9Mxdt4UOZV9h0DPbRTNxOX7J6wMI' 
+  var sheetname = 'Form Responses 1' 
+  var sheetDoc = SpreadsheetApp.openById(sheetid);
+  var sheet = sheetDoc.getSheetByName(sheetname);
+  var data = sheet.getDataRange().getValues();
+  sheet.getRange(sheet.getLastRow(), 9).setValue('Pending');
+  Logger.log(sheet.getRange(sheet.getLastRow(), 9).getValue())
+  var useremail = sheet.getRange(sheet.getLastRow(), 3).getValue()
+  var status = sheet.getRange(sheet.getLastRow(), 9).getValue()
+  Logger.log(status)
+  //var lastrow = sheet.getLastRow()
+  //var status = lastrow.getValues[8]
+  //var useremail = lastrow[2]
+  //var useremail = 'classica314@gmail.com'
+  GmailApp.sendEmail(useremail, 'Mental Health Buddy', 'Thanks for joining Mental Health Buddy! We are currently pairing you, and you should be set for your sessions soon!');
+
+  pair();
+}
+
+function pair() {
+  Logger.log('Starting pair')
+  var sheetid = '1qhJ9ikBZtV0aDfL9Mxdt4UOZV9h0DPbRTNxOX7J6wMI' 
+  var sheetname = 'Form Responses 1' 
+  var sheet = SpreadsheetApp.openById(sheetid).getSheetByName(sheetname);
+  var data = sheet.getDataRange().getValues();
+  for (var i=1; i < data.length; i++) {
+    var useremail = sheet.getRange(i,3).getValue()
+    Logger.log('first for loop begins')
+    Logger.log(i)
+    var status = sheet.getRange(i,9).getValue()
+    Logger.log(status)
+    if(status == 'Pending'){
+      Logger.log('first if inside for')
+      var name = sheet.getRange(i,2).getValue()
+      var fp = sheet.getRange(i,4).getValue();
+      var sp = sheet.getRange(i,5).getValue()
+      var tp = sheet.getRange(i,6).getValue()
+      Logger.log(name)
+      Logger.log(fp)
+      Logger.log(sp)
+      Logger.log(tp)
+      for (var j=1; j < data.length + 1; j++) {
+        var oppemail = sheet.getRange(j,3).getValue()
+        Logger.log('inside 2nd for inside first if inside for')
+        if(sheet.getRange(j,9).getValue() == 'Pending'){
+          var name2 = sheet.getRange(j,2).getValue()
+          var fp2 = sheet.getRange(j,4).getValue()
+          var sp2 = sheet.getRange(j,5).getValue()
+          var tp2 = sheet.getRange(j,6).getValue()
+          Logger.log('if inside 2nd for')
+          if(j != i){
+            Logger.log('inside j!=i')
+            if (fp2 == name && fp == name2){
+              Logger.log('inside data[j][4]...')
+              sheet.getRange(j,8).setValue(name);
+              sheet.getRange(i,8).setValue(name2);
+              status = 'Paired';
+              Logger.log(status)
+              sheet.getRange(i,9).setValue('Paired');
+              sheet.getRange(j,9).setValue('Paired');
+              sendemail(useremail,oppemail);
+            break
+
+            }
+          }
+        }
+      }
+    if(status == 'Pending'){
+      Logger.log('2 if inside for')
+      for (var j=1; j < data.length; j++){
+        var oppemail = sheet.getRange(j,3).getValue()
+        var name2 = sheet.getRange(j,2).getValue()
+        var fp2 = sheet.getRange(j,4).getValue()
+        var sp2 = sheet.getRange(j,5).getValue()
+        var tp2 = sheet.getRange(j,6).getValue()
+        if(status == 'Pending'){
+            if(j != i){
+              if (fp2 == name && sp == name2 || sp2 == name && fp == name2){
+                sheet.getRange(j,8).setValue(name);
+                sheet.getRange(i,8).setValue(data[j][1]);
+                status = 'Paired';
+                sheet.getRange(i,9).setValue('Paired');
+                sheet.getRange(j,9).setValue('Paired');
+                sendemail(useremail,oppemail);
+              break
+              }
+            }
+          }
+      }
+    }
+    if(status == 'Pending'){
+      Logger.log('3 if inside for')
+      for (var j=1; j < data.length; j++){
+          var oppemail = sheet.getRange(j,3).getValue()
+          var name2 = sheet.getRange(j,2).getValue()
+          var fp2 = sheet.getRange(j,4).getValue()
+          var sp2 = sheet.getRange(j,5).getValue()
+          var tp2 = sheet.getRange(j,6).getValue()
+          if(status == 'Pending'){
+            if(j != i){
+              if (sp2 == name && sp == name2){
+                sheet.getRange(j,8).setValue(name);
+                sheet.getRange(i,8).setValue(data[j][1]);
+                status = 'Paired';
+                sheet.getRange(i,9).setValue('Paired');
+                sheet.getRange(j,9).setValue('Paired');
+                sendemail(useremail,oppemail);
+              break
+              }
+            }
+          }
+      }
+    }
+    if(status == 'Pending'){
+      Logger.log('4 if inside for')
+      for (var j=1; j < data.length; j++){
+          var oppemail = sheet.getRange(j,3).getValue()
+          var name2 = sheet.getRange(j,2).getValue()
+          var fp2 = sheet.getRange(j,4).getValue()
+          var sp2 = sheet.getRange(j,5).getValue()
+          var tp2 = sheet.getRange(j,6).getValue()
+          if(status == 'Pending'){
+            if(j != i){
+              if (fp2 == name && tp == name2 || tp2 == name && fp == name2 ){
+                sheet.getRange(j,8).setValue(name);
+                sheet.getRange(i,8).setValue(data[j][1]);
+                status = 'Paired';
+                sheet.getRange(i,9).setValue('Paired');
+                sheet.getRange(j,9).setValue('Paired');
+                sendemail(useremail,oppemail);
+              break
+              }
+            }
+          }
+      }
+    }
+    if(status == 'Pending'){
+      Logger.log('5 if inside for')
+      for (var j=1; j < data.length; j++){
+          var oppemail = sheet.getRange(j,3).getValue()
+          var name2 = sheet.getRange(j,2).getValue()
+          var fp2 = sheet.getRange(j,4).getValue()
+          var sp2 = sheet.getRange(j,5).getValue()
+          var tp2 = sheet.getRange(j,6).getValue()        
+          if(status == 'Pending'){
+            if(j != i){
+              if (tp2 == name && sp == name2 || sp2 == name && tp == name2 ){
+                sheet.getRange(j,8).setValue(name);
+                sheet.getRange(i,8).setValue(data[j][1]);
+                status = 'Paired';
+                sheet.getRange(i,9).setValue('Paired');
+                sheet.getRange(j,9).setValue('Paired');
+                sendemail(useremail,oppemail);
+                break
+              }
+            }
+          }
+      }
+    }
+    if(status == 'Pending'){
+      Logger.log('6 if inside for')
+      for (var j=1; j < data.length; j++){
+          var oppemail = sheet.getRange(j,3).getValue()
+          var name2 = sheet.getRange(j,2).getValue()
+          var fp2 = sheet.getRange(j,4).getValue()
+          var sp2 = sheet.getRange(j,5).getValue()
+          var tp2 = sheet.getRange(j,6).getValue()
+          if(status == 'Pending'){
+            if(j != i){
+              if (tp2 == name && tp == data[j][1]){
+                sheet.getRange(j,8).setValue(name);
+                sheet.getRange(i,8).setValue(data[j][1]);
+                status = 'Paired';
+                sheet.getRange(i,9).setValue('Paired');
+                sheet.getRange(j,9).setValue('Paired');
+                sendemail(useremail,oppemail);
+                break
+              }
+            }
+          }
+      }
+    }
+}
+  }
+}
+function sendemail(usermail,oppmail){
+  var ssid2 = SpreadsheetApp.create(name2 + ' ' + name);
+  var ssid2url = ssid2.getUrl();
+  var sheet = SpreadsheetApp.openById('1qttC2OKwskIFHNHfLubOH7c0NazXrc-9TcBKiEIZ7cA').getSheetByName('Sheet 1');
+  sheet.copyTo(SpreadsheetApp.openByUrl(ssid2url).getSheetByName('Sheet 1'))
+  sheet = SpreadsheetApp.openByUrl(ssid2url).getSheetByName('Sheet 1');
+  SpreadsheetApp.getActiveSpreadsheet().addEditors(usermail,oppmail);
+  SpreadsheetApp.getActiveSpreadsheet().insertSheet('Sheet 2');
+  SpreadsheetApp.getActiveSpreadsheet().insertSheet('Final');
+  var subject = 'Thanks for joining Mental Health Buddy! You have been paired with ' + name2 + '. Please fill out the times you are available in this link:' + ssid2url
+  var subject2 = 'Thanks for joining Mental Health Buddy! You have been paired with ' + name + '. Please fill out the times you are available in this link:' + ssid2url
+  GmailApp.sendEmail(usermail, 'Mental Health Buddy Pairing',subject);
+  GmailApp.sendEmail(oppmail, 'Mental Health Buddy Pairing',subject2);
+}
